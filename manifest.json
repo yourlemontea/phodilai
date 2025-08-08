@@ -1,0 +1,155 @@
+{
+  "name": "PHỐ ĐI LẠI LÝ NHÂN",
+  "short_name": "Phố Đi Lại",
+  "description": "Ứng dụng đặt hàng đồ uống và đồ ăn nhẹ online tại Phố Đi Lại Lý Nhân",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#667eea",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "vi",
+  "categories": ["food", "shopping", "business"],
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/icons/icon-72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/desktop-1.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Trang chủ ứng dụng"
+    },
+    {
+      "src": "/screenshots/mobile-1.png",
+      "sizes": "375x667",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Giao diện di động"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Đặt hàng nhanh",
+      "short_name": "Đặt hàng",
+      "description": "Đặt hàng đồ uống yêu thích",
+      "url": "/#menu",
+      "icons": [
+        {
+          "src": "/icons/shortcut-order.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Theo dõi đơn hàng",
+      "short_name": "Theo dõi",
+      "description": "Kiểm tra trạng thái đơn hàng",
+      "url": "/#tracking",
+      "icons": [
+        {
+          "src": "/icons/shortcut-track.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Khuyến mãi",
+      "short_name": "Ưu đãi",
+      "description": "Xem các chương trình khuyến mãi",
+      "url": "/#promotions",
+      "icons": [
+        {
+          "src": "/icons/shortcut-promo.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Hỗ trợ",
+      "short_name": "Hỗ trợ",
+      "description": "Liên hệ hỗ trợ khách hàng",
+      "url": "/#chat",
+      "icons": [
+        {
+          "src": "/icons/shortcut-support.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "protocol_handlers": [
+    {
+      "protocol": "web+phodilai",
+      "url": "/order?id=%s"
+    }
+  ],
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  "handle_links": "preferred",
+  "share_target": {
+    "action": "/share-order",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
+}

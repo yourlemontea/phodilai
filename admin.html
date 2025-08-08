@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Trị - PHỐ ĐI LẠI LÝ NHÂN</title>
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="admin-body">
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="container">
+            <div class="admin-header-content">
+                <div class="admin-logo">
+                    <i class="fas fa-chart-line"></i>
+                    <h1>Quản Trị Hệ Thống</h1>
+                </div>
+                <div class="admin-actions">
+                    <button id="adminThemeToggle" class="icon-btn" title="Chế độ tối">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button id="refreshData" class="icon-btn" title="Làm mới dữ liệu">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <button id="exportData" class="icon-btn" title="Xuất dữ liệu">
+                        <i class="fas fa-download"></i>
+                    </button>
+                    <div class="admin-user">
+                        <i class="fas fa-user-shield"></i>
+                        <span>Admin</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="admin-container">
+        <!-- Sidebar Navigation -->
+        <nav class="admin-sidebar">
+            <ul class="nav-menu">
+                <li class="nav-item active">
+                    <a href="#dashboard" class="nav-link">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#orders" class="nav-link">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span>Đơn Hàng</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#menu" class="nav-link">
+                        <i class="fas fa-utensils"></i>
+                        <span>Thực Đơn</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#analytics" class="nav-link">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Báo Cáo</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#promotions" class="nav-link">
+                        <i class="fas fa-tags"></i>
+                        <span>Khuyến Mãi</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#feedback" class="nav-link">
+                        <i class="fas fa-star"></i>
+                        <span>Phản Hồi</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#chat" class="nav-link">
+                        <i class="fas fa-comments"></i>
+                        <span>Tin Nhắn</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#settings" class="nav-link">
+                        <i class="fas fa-cog"></i>
+                        <span>Cài Đặt</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Dashboard Tab -->
+            <section id="dashboard" class="admin-section active">
+                <div class="section-header">
+                    <h2><i class="fas fa-tachometer-alt"></i> Dashboard</h2>
+                    <div class="date-filter">
+                        <select id="dashboardPeriod">
+                            <option value="today">Hôm nay</option>
+                            <option value="week">Tuần này</option>
+                            <option value="month">Tháng này</option>
+                            <option value="year">Năm này</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalOrders">0</h3>
+                            <p>Tổng Đơn Hàng</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalRevenue">0 VNĐ</h3>
+                            <p>Doanh Thu</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="pendingOrders">0</h3>
+                            <p>Đơn Chờ Xử Lý</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="avgRating">0</h3>
+                            <p>Đánh Giá TB</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts -->
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3>Doanh Thu Theo Ngày</h3>
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Sản Phẩm Bán Chạy</h3>
+                        <canvas id="popularItemsChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Orders Tab -->
+            <section id="orders" class="admin-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-shopping-bag"></i> Quản Lý Đơn Hàng</h2>
+                    <div class="section-actions">
+                        <button id="printOrders" class="action-btn">
+                            <i class="fas fa-print"></i> In Đơn Hàng
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Order Status Tabs -->
+                <div class="order-tabs">
+                    <button class="tab-btn active" data-status="pending">
+                        <i class="fas fa-clock"></i>
+                        Đang Chờ (<span id="pendingCount">0</span>)
+                    </button>
+                    <button class="tab-btn" data-status="preparing">
+                        <i class="fas fa-utensils"></i>
+                        Đang Làm (<span id="preparingCount">0</span>)
+                    </button>
+                    <button class="tab-btn" data-status="completed">
+                        <i class="fas fa-check"></i>
+                        Hoàn Thành (<span id="completedCount">0</span>)
+                    </button>
+                    <button class="tab-btn" data-status="archived">
+                        <i class="fas fa-archive"></i>
+                        Lưu Trữ (<span id="archivedCount">0</span>)
+                    </button>
+                </div>
+
+                <!-- Orders List -->
+                <div class="orders-container">
+                    <div id="pendingOrdersList" class="orders-list active"></div>
+                    <div id="preparingOrdersList" class="orders-list"></div>
+                    <div id="completedOrdersList" class="orders-list"></div>
+                    <div id="archivedOrdersList" class="orders-list"></div>
+                </div>
+            </section>
+
+            <!-- Menu Management Tab -->
+            <section id="menu" class="admin-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-utensils"></i> Quản Lý Thực Đơn</h2>
+                    <button id="addMenuItem" class="action-btn primary">
+                        <i class="fas fa-plus"></i> Thêm Món Mới
+                    </button>
+                </div>
+
+                <!-- Categories Management -->
+                <div class="categories-management">
+                    <h3>Danh Mục</h3>
+                    <div id="categoriesList" class="categories-list"></div>
+                    <div class="add-category">
+                        <input type="text" id="newCategoryName" placeholder="Tên danh mục mới">
+                        <button id="addCategory" class="action-btn">
+                            <i class="fas fa-plus"></i> Thêm
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Menu Items -->
+                <div class="menu-management">
+                    <div class="menu-filters">
+                        <select id="categoryFilter">
+                            <option value="all">Tất cả danh mục</option>
+                        </select>
+                        <input type="text" id="menuSearch" placeholder="Tìm kiếm món ăn...">
+                    </div>
+                    <div id="menuItemsList" class="menu-items-grid"></div>
+                </div>
+            </section>
+
+            <!-- Analytics Tab -->
+            <section id="analytics" class="admin-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-bar"></i> Báo Cáo & Phân Tích</h2>
+                    <div class="analytics-controls">
+                        <select id="analyticsType">
+                            <option value="revenue">Doanh Thu</option>
+                            <option value="orders">Đơn Hàng</option>
+                            <option value="products">Sản Phẩm</option>
+                            <option value="customers">Khách Hàng</option>
+                        </select>
+                        <select id="analyticsDate">
+                            <option value="7">7 ngày qua</option>
+                            <option value="30">30 ngày qua</option>
+                            <option value="90">3 tháng qua</option>
+                            <option value="365">1 năm qua</option>
+                        </select>
+                        <button id="exportReport" class="action-btn">
+                            <i class="fas fa-file-excel"></i> Xuất Excel
+                        </button>
+                    </div>
+                </div>
+
+                <div class="analytics-content">
+                    <div class="analytics-chart">
+                        <canvas id="analyticsChart"></canvas>
+                    </div>
+                    <div class="analytics-summary">
+                        <div class="summary-cards">
+                            <div class="summary-card">
+                                <h4>Tổng Doanh Thu</h4>
+                                <p id="summaryRevenue">0 VNĐ</p>
+                            </div>
+                            <div class="summary-card">
+                                <h4>Tổng Đơn Hàng</h4>
+                                <p id="summaryOrders">0</p>
+                            </div>
+                            <div class="summary-card">
+                                <h4>Khách Hàng Mới</h4>
+                                <p id="summaryNewCustomers">0</p>
+                            </div>
+                            <div class="summary-card">
+                                <h4>Tỷ Lệ Hài Lòng</h4>
+                                <p id="summarySatisfaction">0%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Promotions Tab -->
+            <section id="promotions" class="admin-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-tags"></i> Quản Lý Khuyến Mãi</h2>
+                    <button id="addPromotion" class="action-btn primary">
+                        <i class="fas fa-plus"></i> Tạo Khuyến Mãi
+                    </button>
+                </div>
+
+                <div id="promotionsList" class="promotions-list"></div>
+            </section>
+
+            <!-- Feedback Tab -->
+            <section id="feedback" class="admin-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-star"></i> Phản Hồi Khách Hàng</h2>
+                    <div class="feedback-filters">
+                        <select id="ratingFilter">
+                            <option value="all">Tất cả đánh giá</option>
+                            <option value="5">5 sao</option>
+                            <option value="4">4 sao</option>
+                            <option value="3">3 sao</option>
+                            <option value="2">2 sao</option>
+                            <option value="1">1 sao</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="feedbackList" class="feedback-list"></div>
+            </section>
+
+            <!-- Chat Tab -->
+            <section id="chat" class="admin-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-comments"></i> Tin Nhắn Hỗ Trợ</h2>
+                </div>
+
+                <div class="chat-layout">
+                    <div class="chat-list">
+                        <h3>Cuộc Trò Chuyện</h3>
+                        <div id="chatConversations" class="conversations-list"></div>
+                    </div>
+                    <div class="chat-area">
+                        <div id="selectedChat" class="selected-chat">
+                            <div class="chat-placeholder">
+                                <i class="fas fa-comments"></i>
+                                <p>Chọn cuộc trò chuyện để bắt đầu</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Tab -->
+            <section id="settings" class="admin-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-cog"></i> Cài Đặt Hệ Thống</h2>
+                </div>
+
+                <div class="settings-content">
+                    <div class="settings-group">
+                        <h3>Cài Đặt Chung</h3>
+                        <div class="setting-item">
+                            <label>Tên Cửa Hàng</label>
+                            <input type="text" id="storeName" value="PHỐ ĐI LẠI LÝ NHÂN">
+                        </div>
+                        <div class="setting-item">
+                            <label>Số Điện Thoại</label>
+                            <input type="text" id="storePhone" placeholder="Nhập số điện thoại">
+                        </div>
+                        <div class="setting-item">
+                            <label>Địa Chỉ</label>
+                            <input type="text" id="storeAddress" placeholder="Nhập địa chỉ">
+                        </div>
+                    </div>
+
+                    <div class="settings-group">
+                        <h3>Thông Báo</h3>
+                        <div class="setting-item">
+                            <label>
+                                <input type="checkbox" id="enableNotifications" checked>
+                                Bật thông báo đơn hàng mới
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label>
+                                <input type="checkbox" id="enableEmailNotifications">
+                                Gửi email thông báo
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="settings-group">
+                        <h3>Backup & Khôi Phục</h3>
+                        <div class="backup-controls">
+                            <button id="backupData" class="action-btn">
+                                <i class="fas fa-cloud-upload-alt"></i> Backup Dữ Liệu
+                            </button>
+                            <button id="restoreData" class="action-btn">
+                                <i class="fas fa-cloud-download-alt"></i> Khôi Phục
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="settings-actions">
+                        <button id="saveSettings" class="action-btn primary">
+                            <i class="fas fa-save"></i> Lưu Cài Đặt
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <!-- Add Menu Item Modal -->
+    <div id="menuItemModal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3 id="menuItemModalTitle">Thêm Món Mới</h3>
+                <button class="modal-close" id="closeMenuItemModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="menuItemForm">
+                    <div class="form-group">
+                        <label>Tên Món</label>
+                        <input type="text" id="itemName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Danh Mục</label>
+                        <select id="itemCategory" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Giá (VNĐ)</label>
+                        <input type="number" id="itemPrice" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Mô Tả</label>
+                        <textarea id="itemDescription"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Hình Ảnh URL</label>
+                        <input type="url" id="itemImage">
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="itemAvailable" checked>
+                            Có sẵn
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="saveMenuItem" class="action-btn primary">
+                    <i class="fas fa-save"></i> Lưu
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Promotion Modal -->
+    <div id="promotionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="promotionModalTitle">Tạo Khuyến Mãi</h3>
+                <button class="modal-close" id="closePromotionModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="promotionForm">
+                    <div class="form-group">
+                        <label>Tên Khuyến Mãi</label>
+                        <input type="text" id="promoName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Mã Giảm Giá</label>
+                        <input type="text" id="promoCode" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Loại Giảm Giá</label>
+                        <select id="promoType">
+                            <option value="percentage">Phần trăm (%)</option>
+                            <option value="fixed">Số tiền cố định (VNĐ)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Giá Trị Giảm</label>
+                        <input type="number" id="promoValue" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Đơn Hàng Tối Thiểu</label>
+                        <input type="number" id="promoMinOrder" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Ngày Bắt Đầu</label>
+                        <input type="datetime-local" id="promoStartDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Ngày Kết Thúc</label>
+                        <input type="datetime-local" id="promoEndDate" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="savePromotion" class="action-btn primary">
+                    <i class="fas fa-save"></i> Lưu
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="adminNotificationContainer" class="notification-container"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="firebase-config.js"></script>
+    <script type="module" src="firebase-messaging.js"></script>
+    <script type="module" src="notifications.js"></script>
+    <script type="module" src="analytics.js"></script>
+    <script type="module" src="script-admin.js"></script>
+</body>
+</html>

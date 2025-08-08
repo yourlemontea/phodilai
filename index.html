@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHỐ ĐI LẠI LÝ NHÂN - Đặt Hàng Online</title>
+    <meta name="description" content="Đặt hàng đồ uống và đồ ăn nhẹ tại PHỐ ĐI LẠI LÝ NHÂN. Giao hàng nhanh chóng, chất lượng tốt nhất.">
+    <meta name="keywords" content="đặt hàng, đồ uống, trà, cà phê, giao hàng">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Phố Đi Lại">
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-coffee"></i>
+                    <h1>PHỐ ĐI LẠI LÝ NHÂN</h1>
+                </div>
+                <div class="header-actions">
+                    <button id="searchToggle" class="icon-btn" title="Tìm kiếm">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <button id="themeToggle" class="icon-btn" title="Chế độ tối">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button id="langToggle" class="icon-btn" title="Ngôn ngữ">
+                        <i class="fas fa-globe"></i>
+                        <span>VI</span>
+                    </button>
+                    <div class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cartCount" class="cart-count">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search Bar -->
+    <div id="searchBar" class="search-bar">
+        <div class="container">
+            <div class="search-input-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Tìm kiếm món ăn, đồ uống...">
+                <button id="searchClose" class="search-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <main class="main">
+        <div class="container">
+            <!-- Categories Filter -->
+            <section class="categories-section">
+                <h2 data-translate="categories">Danh Mục</h2>
+                <div class="categories-filter">
+                    <button class="category-btn active" data-category="all" data-translate="all">Tất cả</button>
+                    <button class="category-btn" data-category="tea" data-translate="tea">Trà</button>
+                    <button class="category-btn" data-category="coffee" data-translate="coffee">Cà phê</button>
+                    <button class="category-btn" data-category="smoothie" data-translate="smoothie">Sinh tố</button>
+                    <button class="category-btn" data-category="snacks" data-translate="snacks">Đồ ăn nhẹ</button>
+                </div>
+            </section>
+
+            <!-- Promotions -->
+            <section class="promotions-section">
+                <div class="promotion-banner">
+                    <div class="promotion-content">
+                        <h3><i class="fas fa-gift"></i> <span data-translate="promotions">Khuyến Mãi Hôm Nay</span></h3>
+                        <p id="currentPromotion">Giảm 10% cho đơn hàng từ 100.000đ</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Menu -->
+            <section class="menu-section">
+                <h2 data-translate="menu">Thực Đơn</h2>
+                <div id="menu" class="menu-grid">
+                    <!-- Menu items will be rendered here -->
+                </div>
+                <div id="noResults" class="no-results" style="display: none;">
+                    <i class="fas fa-search"></i>
+                    <p data-translate="no_results">Không tìm thấy sản phẩm nào</p>
+                </div>
+            </section>
+
+            <!-- Cart Section -->
+            <section class="cart-section">
+                <div class="cart-header">
+                    <h2><i class="fas fa-shopping-cart"></i> <span data-translate="cart">Giỏ Hàng</span></h2>
+                    <button id="clearCart" class="clear-cart-btn" data-translate="clear_cart">Xóa tất cả</button>
+                </div>
+                <div id="cart" class="cart-items">
+                    <div id="emptyCart" class="empty-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <p data-translate="empty_cart">Giỏ hàng trống</p>
+                    </div>
+                </div>
+                <div class="cart-summary">
+                    <div class="discount-section">
+                        <div class="discount-input">
+                            <input type="text" id="discountCode" placeholder="Mã giảm giá">
+                            <button id="applyDiscount" data-translate="apply">Áp dụng</button>
+                        </div>
+                        <div id="discountInfo" class="discount-info" style="display: none;"></div>
+                    </div>
+                    <div class="total-section">
+                        <div class="subtotal">
+                            <span data-translate="subtotal">Tạm tính:</span>
+                            <span id="subtotal">0 VNĐ</span>
+                        </div>
+                        <div class="discount-amount" id="discountAmount" style="display: none;">
+                            <span data-translate="discount">Giảm giá:</span>
+                            <span id="discountValue">0 VNĐ</span>
+                        </div>
+                        <div class="total">
+                            <span data-translate="total">Tổng tiền:</span>
+                            <span id="totalPrice">0 VNĐ</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="order-buttons">
+                    <button id="dineInBtn" class="order-btn primary">
+                        <i class="fas fa-utensils"></i>
+                        <span data-translate="dine_in">Uống Tại Chỗ</span>
+                    </button>
+                    <button id="deliveryBtn" class="order-btn secondary">
+                        <i class="fas fa-truck"></i>
+                        <span data-translate="delivery">Đặt Giao Hàng</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Order Tracking -->
+            <section id="orderTracking" class="order-tracking" style="display: none;">
+                <h2><i class="fas fa-clock"></i> <span data-translate="order_status">Trạng Thái Đơn Hàng</span></h2>
+                <div id="currentOrderStatus" class="order-status-timeline">
+                    <!-- Order status will be rendered here -->
+                </div>
+            </section>
+
+            <!-- Customer Feedback -->
+            <section class="feedback-section">
+                <h2><i class="fas fa-star"></i> <span data-translate="feedback">Đánh Giá & Phản Hồi</span></h2>
+                <div class="feedback-form">
+                    <div class="rating-input">
+                        <label data-translate="rating">Đánh giá:</label>
+                        <div class="stars">
+                            <i class="fas fa-star" data-rating="1"></i>
+                            <i class="fas fa-star" data-rating="2"></i>
+                            <i class="fas fa-star" data-rating="3"></i>
+                            <i class="fas fa-star" data-rating="4"></i>
+                            <i class="fas fa-star" data-rating="5"></i>
+                        </div>
+                    </div>
+                    <textarea id="feedbackText" placeholder="Chia sẻ trải nghiệm của bạn..."></textarea>
+                    <button id="submitFeedback" class="submit-feedback-btn" data-translate="submit_feedback">Gửi Phản Hồi</button>
+                </div>
+                <div id="recentFeedback" class="recent-feedback">
+                    <!-- Recent feedback will be displayed here -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Chat Widget -->
+    <div id="chatWidget" class="chat-widget">
+        <div class="chat-toggle" id="chatToggle">
+            <i class="fas fa-comments"></i>
+        </div>
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">
+                <span data-translate="support">Hỗ Trợ</span>
+                <button id="chatClose" class="chat-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-message bot">
+                    <span data-translate="welcome_message">Xin chào! Tôi có thể giúp gì cho bạn?</span>
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="chatMessageInput" placeholder="Nhập tin nhắn...">
+                <button id="sendMessage">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <!-- Customization Modal -->
+    <div id="customizationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="customizationItemName"></h3>
+                <button class="modal-close" id="closeCustomizationModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="item-image">
+                    <img id="customizationItemImage" src="" alt="">
+                </div>
+                <div class="customization-options">
+                    <div class="option-group" id="sugarGroup">
+                        <h4 data-translate="sugar">Đường</h4>
+                        <div id="sugarOptions" class="options-list"></div>
+                    </div>
+                    <div class="option-group" id="iceGroup">
+                        <h4 data-translate="ice">Đá</h4>
+                        <div id="iceOptions" class="options-list"></div>
+                    </div>
+                    <div class="option-group" id="toppingGroup" style="display: none;">
+                        <h4 data-translate="toppings">Topping</h4>
+                        <div id="toppingOptions" class="options-list"></div>
+                    </div>
+                    <div class="quantity-selector">
+                        <label data-translate="quantity">Số lượng:</label>
+                        <div class="quantity-controls">
+                            <button id="decreaseQty" type="button">-</button>
+                            <input type="number" id="itemQuantity" value="1" min="1">
+                            <button id="increaseQty" type="button">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="item-price">
+                    <span data-translate="price">Giá:</span>
+                    <span id="modalItemPrice">0 VNĐ</span>
+                </div>
+                <button id="addToCartModalBtn" class="add-to-cart-btn" data-translate="add_to_cart">Thêm vào giỏ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Modal -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="orderModalTitle"></h3>
+                <button class="modal-close" id="closeOrderModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="orderOptions" class="order-options">
+                    <!-- Order form will be rendered here -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="submitOrderBtn" class="submit-order-btn" data-translate="submit_order">Gửi Đơn Hàng</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notificationContainer" class="notification-container"></div>
+
+    <!-- Scripts -->
+    <script type="module" src="translations.js"></script>
+    <script type="module" src="firebase-config.js"></script>
+    <script type="module" src="firebase-messaging.js"></script>
+    <script type="module" src="notifications.js"></script>
+    <script type="module" src="script-client.js"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                        console.log('✅ Service Worker registered:', registration);
+                    })
+                    .catch((error) => {
+                        console.error('❌ Service Worker registration failed:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
